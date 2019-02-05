@@ -1,0 +1,18 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+form ul, .tree ul {
+    list-style: none;
+}
+
+.tree {
+    max-height: 65vh;
+    overflow-y: scroll;
+}
+
+.shop-body {
+    min-height: 70vh;
+}

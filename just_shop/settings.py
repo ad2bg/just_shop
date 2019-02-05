@@ -31,12 +31,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'grappelli',  # pip install django-grappelli==2.12.2
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'crispy_forms',  # pip install django-crispy-forms
+    'main',
+    'users',
+    'shop',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +60,7 @@ ROOT_URLCONF = 'just_shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -118,3 +124,69 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    # '/var/www/static/',
+]
+
+
+#########################
+#      MY SETTINGS      #
+#########################
+
+MY_WEBSITE_NAME = 'Just Shop'
+
+AUTH_USER_MODEL = 'users.UserModel'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         # 'rest_framework.authentication.BasicAuthentication',
+#         # 'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#         # 'rest_framework.authentication.JSONWebTokenTokenAuthentication',
+#     ),
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+#     'PAGE_SIZE': 2
+# }
+
+STATIC_ROOT = 'src/just_shop/static/'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# GRAPPELLI
+GRAPPELLI_ADMIN_TITLE = MY_WEBSITE_NAME
+GRAPPELLI_SWITCH_USER = True
+# GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
+#     "air": {
+#         "Aircraft": "name__icontains ".split(),
+#         "Airline": "name__icontains country__name__icontains".split(),
+#         "Airport": "name__icontains city__icontains country__name__icontains".split(),
+#         "Flight": "route__icontains depart_utc__icontains arrive_utc__icontains aircraft__name__icontains".split(),
+#         "FlightClass": "name__icontains aircraft__name__icontains".split(),
+#         "Route": "airline__name__icontains origin__name__icontains destination__name__icontains".split(),
+#         "Ticket": "customer__name__icontains".split(),
+#     }
+# }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+LOGIN_URL = '/users/login'
+LOGIN_REDIRECT_URL = 'main-shop'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+# DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+# SERVER_EMAIL = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
