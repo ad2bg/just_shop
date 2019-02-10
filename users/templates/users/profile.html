@@ -1,4 +1,4 @@
-{% extends "main/base.html" %}
+{% extends "shop/base.html" %}
 
 {% load crispy_forms_tags %}
 
@@ -6,9 +6,14 @@
 
     <div class="content-section container bg-light my-5 p-3 mx-auto rounded">
 
-        <div class="media">
-            <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-            <div class="media-body">
+        <div class="row">
+            <div class="col-md-3 mr-3">
+                <a href="{% url 'users-profile_photo' %}" data-toggle="tooltip" title="Profile Photo...">
+                    <img class="rounded-circle account-img m-3 shadow" src="{{ user.profile.image.url }}"
+                         alt="user profile image"></a>
+            </div>
+
+            <div class="col">
                 <h2 class="account-heading">{{ user.name }}</h2>
                 <p class="text-secondary">{{ user.email }}</p>
             </div>
@@ -16,20 +21,21 @@
 
 
         <!-- FORM -->
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Profile Info</legend>
-                {{ u_form|crispy }}
-                {{ p_form|crispy }}
+                {{ form|crispy }}
             </fieldset>
 
-            <div class="form-group">
-                <button type="submit" class="btn btn-outline-info">Update</button>
+            <div class="form-group d-flex">
+                <button type="submit" class="btn btn-outline-info mr-2">
+                    <i class="far fa-save"></i> Update</button>
+                <a href="{% url 'shop' %}" class="btn btn-outline-secondary"
+                   data-toggle="tooltip" title="Cancel"><i class="fas fa-angle-double-left"></i></a>
+{#                <a href="{% url 'password_reset' %}" class="btn btn-outline-danger ml-auto"#}
+{#                   data-toggle="tooltip" title="Change Password"><i class="fas fa-key"></i></a>#}
             </div>
-            <small class="text-muted ml-2">
-                <a href="{% url 'password_reset' %}">Change Password</a>
-            </small>
         </form>
 
 

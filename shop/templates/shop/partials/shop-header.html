@@ -1,0 +1,37 @@
+{# <span class="display-4">{{ title }}</span> #}
+<ul id="full-path" class="m-0 pl-3">
+
+    {#Root#}
+    <li>
+        <a href="{% url 'shop' %}" data-toggle="tooltip"
+                {% if full_path|length %}
+           title="Go Home."
+                {% else %}
+           title="You are here."
+                {% endif %}
+        >Shop</a>
+    </li>
+
+    {#Breadcrumbs#}
+    {% if full_path %}
+        {% for k, v in full_path %}
+            <li>
+                <i class="fas fa-angle-right"></i>
+                {% if forloop.last %}
+                    {% if user.is_staff %}
+                        {% if title == 'Shop' %}
+                            <a href="{% url 'category_update' k %}" data-toggle="tooltip" title="Edit...">{{ v }}</a>
+                        {% else %}
+                            <a href="{% url 'shop' k %}" data-toggle="tooltip" title="View Category in Shop">{{ v }}</a>
+                        {% endif %}
+                    {% else %}
+                        <span data-toggle="tooltip" title="You are here.">{{ v }}</span>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'shop' k %}"
+                       data-toggle="tooltip" title="Go to: {{ v }}">{{ v }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    {% endif %}
+</ul>

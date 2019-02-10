@@ -1,0 +1,54 @@
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+#full-path {
+  list-style: none;
+
+  li {
+    display: inline-block;
+
+    a, span {
+      text-decoration: none;
+      color: white;
+      box-sizing: content-box;
+      padding: 0.3em 0.6em;
+      border-radius: 10px;
+
+      &:hover {
+        background: brown;
+      }
+    }
+  }
+}
+
+
+.shop-body {
+  min-height: 70vh;
+
+  .scrollable {
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .product-image {
+    max-width: 150px;
+    max-height: 150px;
+    border: 3px solid $secondary-color;
+
+    &:hover {
+      transform: scale(1.15);
+      border: 10px solid $secondary-color;
+      @include easeOut;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+

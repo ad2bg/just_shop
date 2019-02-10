@@ -1,18 +1,39 @@
+$primary-color: rgb(68, 67, 129);
+$secondary-color: #eece1a;
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+#shop {
+  background-image: url("/static/images/boxes.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+#cart {
+  background-image: url("/static/images/cart.png");
+}
+
 
 form ul, .tree ul {
-    list-style: none;
+  list-style: none;
 }
 
-.tree {
-    max-height: 65vh;
-    overflow-y: scroll;
+.pull-right {
+  position: absolute;
+  right: 0;
 }
 
-.shop-body {
-    min-height: 70vh;
+.font-size-lg {
+  font-size: 1.5em;
+}
+
+// MIXINS
+@mixin easeOut {
+  transition: all 0.6s ease-out;
 }

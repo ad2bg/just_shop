@@ -1,0 +1,44 @@
+{% extends "shop/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="content-section container bg-light my-5 p-3 mx-auto rounded">
+
+        <div class="row">
+            <div class="col-md-3 mr-3">
+                <a href="{% url 'users-profile' %}" data-toggle="tooltip" title="Profile Info...">
+                    <img class="rounded-circle account-img m-3 shadow" src="{{ user.profile.image.url }}"
+                         alt="user profile image">
+                </a>
+            </div>
+
+            <div class="col">
+                <h2 class="account-heading">{{ user.name }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
+        </div>
+
+
+        <!-- FORM -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile Photo</legend>
+                {% include 'shop/partials/file-upload.html' %}
+            </fieldset>
+
+            <div class="d-flex">
+                <button type="submit" class="btn btn-outline-info mr-2">
+                    <i class="far fa-save"></i> Update
+                </button>
+                <a href="{% url 'users-profile' %}" class="btn btn-outline-secondary d-flex"
+                   data-toggle="tooltip" title="Cancel"><i class="fas fa-angle-double-left m-auto"></i></a>
+                <small class="ml-auto p-2">To remove your photo - just Update without selecting a file.</small>
+            </div>
+        </form>
+
+    </div>
+
+{% endblock content %}

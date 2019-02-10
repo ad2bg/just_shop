@@ -1,0 +1,15 @@
+{% extends "shop/shop.html" %}
+
+{% block header-and-body %}
+    <div class="col-12 p-2 bg-secondary text-light d-flex">
+        <span class="display-4">{{ title }}:</span>
+    </div>
+
+    <div class="col-12 shop-body">
+        <div class="row h-100 p-3 bg-success">
+            <div class="col-12 px-0">
+                {% include 'shop/partials/products-form.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

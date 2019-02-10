@@ -1,0 +1,42 @@
+<div class="h-100 bg-light rounded p-3">
+
+    {% if products %}
+        <div class="scrollable">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th data-toggle="tooltip" title="In number of carts"><i class="fas fa-shopping-cart"></i></th>
+                    <th data-toggle="tooltip" title="Actions"><i class="fas fa-tools"></i></th>
+                </tr>
+                </thead>
+                {% for product in products %}
+                    <tr>
+                        <td><a href="{% url 'product_update' product.id %}" data-toggle="tooltip"
+                               title="{{ product.description_shortened }}">{{ product.name }}</a></td>
+                        <td><a href="{% url 'category_update' product.category.id %}" data-toggle="tooltip"
+                               title="{{ product.category.full_path }}">{{ product.category.name }}</a>
+                        </td>
+                        <td class="text-right">${{ product.price }}</td>
+                        <td class="text-center">{{ product.carts.all|length }}</td>
+                        <td class="text-center">
+                            {% if product.carts.all %}
+                                <a href="{% url 'product_view' product.id %}" class="btn btn-success"
+                                   data-toggle="tooltip" title="View"><i class="far fa-eye"></i></a>
+                            {% else %}
+                                <a href="{% url 'product_delete' product.id %}" class="btn btn-danger"
+                                   data-toggle="tooltip" title="Delete"><i class="far fa-trash-alt"></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <p class="display-4 text-center">No Products</p>
+    {% endif %}
+
+
+</div>

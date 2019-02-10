@@ -1,0 +1,42 @@
+{% extends "shop/shop.html" %}
+
+{% block header-and-body %}
+
+    <div class="col-12 p-2 bg-secondary text-light">
+        <span class="display-4">{{ title }}</span>
+        <a href="{% url 'shop' product.category.id %}" class="text-light pull-right p-3">
+            Category: {{ product.category.name }}
+        </a>
+    </div>
+
+    <div class="col-12 shop-body p-3">
+        <div class="row">
+            <div class="col">
+                {% include 'shop/partials/product-snippet.html' %}
+            </div>
+            <div class="col-md-3 py-3 border-left">
+                <label for="price-{{ product.id }}">Price:</label>
+                <input type="number" value="{{ product.price }}" class="form-control" id="price-{{ product.id }}"
+                       disabled>
+                <p></p>
+                {% if user.is_authenticated %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id">
+                        <label for="qty-{{ product.id }}">Quantity:</label>
+                        <div class="d-flex">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="number" name="quantity" value="1" min="1" class="form-control"
+                                   id="qty-{{ product.id }}">
+                            <button class="btn btn-primary mx-2" data-toggle="tooltip" title="Add To Cart">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

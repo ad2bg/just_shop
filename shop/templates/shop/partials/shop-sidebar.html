@@ -1,0 +1,33 @@
+<div class="content-section h-100">
+
+    <h3 class="px-2">
+        {% if user.is_staff and category_name != "Shop" %}
+            <a href="{% url 'category_update' category_id %}" data-toggle="tooltip" title="Edit...">
+                {{ category_name }}
+            </a>:
+        {% else %}
+            {{ category_name }}:
+        {% endif %}
+    </h3>
+
+    <div class="scrollable h-100">
+        <table class="table table-scrollable bg-light">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th data-toggle="tooltip" title="Sub-categories"><i class="fas fa-sitemap"></i></th>
+                <th data-toggle="tooltip" title="Products"><i class="fas fa-grip-horizontal"></i></th>
+            </tr>
+            </thead>
+            {% for category in categories %}
+                <tr>
+                    <td class="py-1"><a href="{% url 'shop' category.id %}" data-toggle="tooltip"
+                                        title="{{ category.description }}">{{ category.name }}</a></td>
+                    <td class="py-1">{{ category.sub_categories.all|length }}</td>
+                    <td class="py-1">{{ category.products.all|length }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>

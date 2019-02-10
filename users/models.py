@@ -4,20 +4,14 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager  # subs
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from PIL import Image  # pip install pillow
-
-DEFAULT_PROFILE_IMAGE_FILENAME = 'users/default.jpg'
-DEFAULT_PROFILE_IMAGES_FOLDER = 'users/photos'
-# DEFAULT_PRODUCT_IMAGE_FILENAME = 'products/default.png'
-# DEFAULT_PRODUCT_IMAGES_FOLDER = 'products/photos'
 
 
 class UserModelManager(BaseUserManager):
     """Allow Django to work with the custom 'UserModel' user model."""
 
     def create_user(self, email, name, password):
-        """Creates a new user profile object."""
+        """Creates a new user profile_info object."""
 
         if not email:
             raise ValueError('Users must have an email address.')
@@ -69,10 +63,6 @@ class UserModel(AbstractBaseUser, PermissionsMixin):
         """Used to get a user's short name."""
         return self.name
 
-    # @property
-    # def total_tickets(self):
-    #     return len(self.tickets.all())
-
     def __str__(self):
         """Django uses this when it needs to convert the object to a string."""
         return self.email
@@ -89,8 +79,8 @@ class Profile(models.Model):
 
     user = models.OneToOneField(UserModel, on_delete=models.CASCADE, related_name='profile', null=True)
     image = models.ImageField(
-        default=DEFAULT_PROFILE_IMAGE_FILENAME,
-        upload_to=DEFAULT_PROFILE_IMAGES_FOLDER,
+        default=settings.PROFILE_IMAGES_DEFAULT_FILENAME,
+        upload_to=settings.PROFILE_IMAGES_FOLDER,
         blank=True, null=True)
 
     @property
@@ -117,10 +107,6 @@ class Profile(models.Model):
     def is_superuser(self):
         return self.user.is_superuser
 
-    # @property
-    # def total_tickets(self):
-    #     return len(self.user.tickets.all())
-
     def __str__(self):
         return f'{self.user.name}\'s Profile'
 
@@ -131,14 +117,13 @@ class Profile(models.Model):
         """
 
         # fall back to the default value if the user clears the image using the form
-        self.image.name = self.image.name or DEFAULT_PROFILE_IMAGE_FILENAME
-
+        self.image.name = self.image.name or settings.PROFILE_IMAGES_DEFAULT_FILENAME
         super().save()
-
+        # resize image
         img = Image.open(self.image.path)
-
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
+        max_size = settings.PROFILE_IMAGES_MAX_SIZE
+        if img.height > max_size or img.width > max_size:
+            output_size = (max_size, max_size)
             img.thumbnail(output_size)
             img.save(self.image.path)
 

@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = '91w%jo9h%_&*mou-x7n@(f9jdft=#ns25bblhax++vu8pbp4=c'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'crispy_forms',  # pip install django-crispy-forms
-    'main',
+    # 'django.contrib.humanize', # https://docs.djangoproject.com/en/2.1/ref/contrib/humanize/  // {% load humanize %}
     'users',
     'shop',
 ]
@@ -75,7 +73,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'just_shop.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -85,7 +82,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -105,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -119,7 +114,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
@@ -129,7 +123,6 @@ STATICFILES_DIRS = [
     # '/var/www/static/',
 ]
 
-
 #########################
 #      MY SETTINGS      #
 #########################
@@ -138,19 +131,14 @@ MY_WEBSITE_NAME = 'Just Shop'
 
 AUTH_USER_MODEL = 'users.UserModel'
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': (
-#         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-#     ),
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         # 'rest_framework.authentication.BasicAuthentication',
-#         # 'rest_framework.authentication.SessionAuthentication',
-#         'rest_framework.authentication.TokenAuthentication',
-#         # 'rest_framework.authentication.JSONWebTokenTokenAuthentication',
-#     ),
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-#     'PAGE_SIZE': 2
-# }
+PROFILE_IMAGES_DEFAULT_FILENAME = 'users/default.jpg'
+PROFILE_IMAGES_FOLDER = 'users/photos'
+PROFILE_IMAGES_MAX_SIZE = 150
+PRODUCT_IMAGES_DEFAULT_FILENAME = 'products/default.png'
+PRODUCT_IMAGES_FOLDER = 'products/photos'
+PRODUCT_IMAGES_MAX_SIZE = 300
+
+CATEGORY_PATH_SEPARATOR = ' >> '
 
 STATIC_ROOT = 'src/just_shop/static/'
 
@@ -159,23 +147,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # GRAPPELLI
 GRAPPELLI_ADMIN_TITLE = MY_WEBSITE_NAME
 GRAPPELLI_SWITCH_USER = True
-# GRAPPELLI_AUTOCOMPLETE_SEARCH_FIELDS = {
-#     "air": {
-#         "Aircraft": "name__icontains ".split(),
-#         "Airline": "name__icontains country__name__icontains".split(),
-#         "Airport": "name__icontains city__icontains country__name__icontains".split(),
-#         "Flight": "route__icontains depart_utc__icontains arrive_utc__icontains aircraft__name__icontains".split(),
-#         "FlightClass": "name__icontains aircraft__name__icontains".split(),
-#         "Route": "airline__name__icontains origin__name__icontains destination__name__icontains".split(),
-#         "Ticket": "customer__name__icontains".split(),
-#     }
-# }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_URL = '/users/login'
-LOGIN_REDIRECT_URL = 'main-shop'
+LOGIN_REDIRECT_URL = 'shop'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -190,3 +167,10 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 # SERVER_EMAIL = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
+######################################################################
+# Note: To enable password-reset emails (using Gmail smtp server):   #
+# obtain app password from https://myaccount.google.com/apppasswords #
+# set the following environment variables:                           #
+# EMAIL_HOST_USER                                                    #
+# EMAIL_HOST_PASSWORD                                                #
+######################################################################

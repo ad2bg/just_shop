@@ -1,0 +1,17 @@
+{% extends "shop/shop.html" %}
+
+{% block header-and-body %}
+    <div class="col-12 p-2 bg-secondary text-light shop-header">
+        <h4>{{ title }}:</h4>
+        <span><a href="{% url 'category_create' %}" class="btn btn-info" data-toggle="tooltip" title="New Category">
+            <i class="fas fa-plus"></i></a></span>
+    </div>
+
+    <div class="col-12 shop-body">
+        <div class="row h-100 p-3 bg-info">
+            <div class="col-12 px-0 h-100">
+                {% include 'shop/partials/categories.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

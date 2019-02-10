@@ -3,15 +3,112 @@
   padding: 0;
   box-sizing: border-box; }
 
+#shop {
+  background-image: url("/static/images/boxes.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover; }
+
+#cart {
+  background-image: url("/static/images/cart.png"); }
+
 form ul, .tree ul {
   list-style: none; }
 
-.tree {
-  max-height: 65vh;
-  overflow-y: scroll; }
+.pull-right {
+  position: absolute;
+  right: 0; }
 
-.shop-body {
-  min-height: 70vh; }
+.font-size-lg {
+  font-size: 1.5em; }
+
+.file-upload {
+  background-color: #ffffff;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px; }
+  .file-upload-btn {
+    width: 100%;
+    margin: 0 0 20px;
+    color: #fff;
+    background: #1FB264;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    border-bottom: 4px solid #15824B;
+    transition: all .2s ease;
+    outline: none;
+    text-transform: uppercase;
+    font-weight: 700; }
+    .file-upload-btn:hover {
+      background: #1AA059;
+      color: #ffffff;
+      transition: all .2s ease;
+      cursor: pointer; }
+    .file-upload-btn:active {
+      border: 0;
+      transition: all .2s ease; }
+  .file-upload-content {
+    display: none;
+    text-align: center; }
+  .file-upload-input {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    opacity: 0;
+    cursor: pointer; }
+  .file-upload-image {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+    padding: 20px; }
+
+.image-upload-wrap {
+  border: 4px dashed #1FB264;
+  position: relative; }
+
+.image-dropping,
+.image-upload-wrap:hover {
+  background-color: #1FB264;
+  border: 4px dashed #ffffff; }
+
+.image-title-wrap {
+  padding: 0 15px 15px 15px;
+  color: #222; }
+
+.drag-text {
+  text-align: center; }
+  .drag-text h3 {
+    font-weight: 100;
+    text-transform: uppercase;
+    color: #15824B;
+    padding: 60px 0; }
+
+.remove-image {
+  width: 200px;
+  margin: 0;
+  color: #fff;
+  background: #cd4535;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  border-bottom: 4px solid #b02818;
+  transition: all .2s ease;
+  outline: none;
+  text-transform: uppercase;
+  font-weight: 700; }
+  .remove-image:hover {
+    background: #c13b2a;
+    color: #ffffff;
+    transition: all .2s ease;
+    cursor: pointer; }
+  .remove-image:active {
+    border: 0;
+    transition: all .2s ease; }
 
 /*Hide the right navbar button on narrow screens*/
 @media all and (max-width: 350px) {
@@ -31,17 +128,63 @@ form ul, .tree ul {
   /*Without this, clicking will make it sticky*/
   /*pointer-events: none;*/ }
 
-/*Navbar links hover background*/
-.navbar a:hover {
-  /*background-color: rgb(0, 0, 0); !* for light on dark *!*/
-  background-color: rgba(0, 0, 0, 0.1);
-  /* for dark on light */ }
+.navbar {
+  /*Navbar links hover background*/
+  /*Custom colors for the navbar toggle buttons*/
+  /*Comment these out when using the defaults (light or dark) navbar*/ }
+  .navbar a:hover {
+    /*background-color: rgb(0, 0, 0); !* for light on dark *!*/
+    background-color: rgba(0, 0, 0, 0.1);
+    /* for dark on light */ }
+  .navbar .navbar-toggler {
+    border-color: white;
+    /* Notice the rgba setting */ }
+    .navbar .navbar-toggler .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
+  .navbar .navbar-collapse {
+    margin: 0; }
 
-/*Custom colors for the navbar toggle buttons*/
-/*Comment these out when using the defaults (light or dark) navbar*/
-.custom-toggler.navbar-toggler {
-  border-color: #ff66cb; }
+.account-img {
+  width: 150px;
+  height: 150px;
+  border: 3px solid #444381; }
+  .account-img:hover {
+    transform: scale(1.15);
+    border: 10px solid #444381;
+    transition: all 0.6s ease-out;
+    cursor: pointer; }
 
-/*Notice the rgba setting*/
-.custom-toggler .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,102,203, 0.7)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); }
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+
+#full-path {
+  list-style: none; }
+  #full-path li {
+    display: inline-block; }
+    #full-path li a, #full-path li span {
+      text-decoration: none;
+      color: white;
+      box-sizing: content-box;
+      padding: 0.3em 0.6em;
+      border-radius: 10px; }
+      #full-path li a:hover, #full-path li span:hover {
+        background: brown; }
+
+.shop-body {
+  min-height: 70vh; }
+  .shop-body .scrollable {
+    max-height: 70vh;
+    overflow: auto; }
+  .shop-body .product-image {
+    max-width: 150px;
+    max-height: 150px;
+    border: 3px solid #eece1a; }
+    .shop-body .product-image:hover {
+      transform: scale(1.15);
+      border: 10px solid #eece1a;
+      transition: all 0.6s ease-out; }
+  .shop-body .buttons {
+    display: flex;
+    justify-content: space-between; }

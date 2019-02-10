@@ -1,0 +1,50 @@
+{% extends "shop/shop.html" %}
+
+{% block header-and-body %}
+    <div class="col-12 p-2 bg-secondary text-light shop-header">
+        <h4>{{ title }}</h4>
+        <span><a href="{% url 'shop' %}" class="btn btn-success"><i class="fas fa-home"></i> Home</a></span>
+    </div>
+
+    <div class="col-12 shop-body">
+        <div class="row h-100 p-3 bg-success scrollable">
+            <div class="col-12 px-0 h-100">
+                <p class="display-4">You purchased:</p>
+
+                <table class="table table-bordered table-striped bg-light">
+                    <thead class="text-center thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    {% for line in purchased %}
+                        <tr data-toggle="tooltip"
+                            title="<div style='height: 150px; width: 150px; background: white; display: flex;'><img style='max-height: 150px; max-width: 150px; margin: auto;' src='{{ line.product.image.url }}' alt='{{ line.product.name }}' class='product-image'></div>">
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="text-left">{{ line.product.name }}</td>
+                            <td class="text-center">{{ line.quantity }}</td>
+                            <td class="text-right">${{ line.product_price }}</td>
+                            <td class="text-right">${{ line.total_price }}</td>
+                        </tr>
+                    {% endfor %}
+                    <tfoot class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="2">Grand Total:</th>
+                        <th class="text-center">{{ totals.items_count }} items</th>
+                        <th class="text-center">{{ totals.products_count }} products</th>
+                        <th class="text-right">${{ totals.total_price }}</th>
+                    </tr>
+                    </tfoot>
+                </table>
+
+                {% for line in message %}
+                    <p class="display-4">{{ line }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

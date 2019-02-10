@@ -1,0 +1,136 @@
+<nav class="navbar fixed-top navbar-expand-md
+    navbar-{{ navbarBgColor|default:'primary' }} bg-{{ navbarBgColor|default:'primary' }} p-0">
+
+    {#Left#}
+    <button id="navbar-toggle-left"
+            class="navbar-toggler m-2" type="button"
+            data-toggle="collapse" data-target=".dual-collapse2">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto p-0">
+
+            {% if user.is_authenticated %}
+
+                {# Cart #}
+                <li class="nav-item text-center">
+                    <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                       href="{% url 'cart' %}"
+                       data-toggle="tooltip"
+                            {% if cart.total_products %}
+                       title="Products: {{ cart.total_products }}<br />Individual items: {{ cart.total_items }}"
+                            {% else %}
+                       title="You cart is empty."
+                            {% endif %}
+                    >
+                        <i class="fas fa-shopping-cart"></i>
+                        ${{ cart.total_price|floatformat:2 }}
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+    </div>
+
+
+    {#Center#}
+    <div class="order-0">
+        <ul class="navbar-nav p-0">
+            <li class="nav-item text-center">
+                <a class="navbar-brand mx-auto text-{{ navbarFgColor|default:'light' }} p-3"
+                   href="{% url 'shop' %}"
+                   data-toggle="tooltip" title="Products">
+                    <i class="fas fa-shopping-basket"></i>
+                    {{ my_website_name }}
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    {#Right#}
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto p-0">
+            {% if user.is_authenticated %}
+
+                {# User #}
+                <li class="nav-item text-center">
+                    <a class="nav-link text-{{ navbarFgColor|default:'light' }}"
+                       href="{% url 'users-profile' %}"
+                       data-toggle="tooltip" title="Hi, {{ user.name }}!">
+
+                        <img src="{{ user.profile.image.url }}" alt="{{ user.name }}"
+                             width="40px" height="40px" class="rounded-circle">
+
+                    </a>
+                </li>
+
+                {# Admin #}
+                {% if user.is_staff %}
+{#                    <li class="nav-item text-center">#}
+{#                        <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"#}
+{#                           href="/admin/"#}
+{#                           data-toggle="tooltip" title="Administration">#}
+{#                            <i class="fas fa-tools"></i>#}
+{#                        </a>#}
+{#                    </li>#}
+                    <li class="nav-item text-center">
+                        <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                           href="{% url 'category_list' %}"
+                           data-toggle="tooltip" title="Manage Categories">
+                            <i class="fas fa-sitemap"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item text-center">
+                        <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                           href="{% url 'product_list' %}"
+                           data-toggle="tooltip" title="Manage Products">
+                            <i class="fas fa-grip-horizontal"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {# Logout #}
+                <li class="nav-item text-center">
+                    <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                       href="{% url 'users-logout' %}"
+                       data-toggle="tooltip" title="Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+
+            {% else %}
+
+                {# Register #}
+                <li class="nav-item text-center">
+                    <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                       href="{% url 'users-register' %}"
+                       data-toggle="tooltip" title="Register">
+                        <i class="fas fa-user-plus"></i>
+                    </a>
+                </li>
+
+                {# Login #}
+                <li class="nav-item text-center">
+                    <a class="nav-link text-{{ navbarFgColor|default:'light' }} p-3"
+                       href="{% url 'users-login' %}"
+                       data-toggle="tooltip" title="Login">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+    </div>
+
+    <button class="navbar-toggler m-2" type="button"
+            data-toggle="collapse" data-target=".dual-collapse2">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+</nav>
+
+<div class="py-3">&nbsp;</div>

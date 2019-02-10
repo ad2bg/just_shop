@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
@@ -34,38 +35,41 @@ def register(request):
 
 
 @login_required
-def profile(request):
-    """
-    Profile FBV.
-    :param request:
-    :return: Profile page
-    """
+def profile_info(request):
+    form = UserUpdateForm(request.POST or None, instance=request.user)
+    if form.is_valid():
+        form.save()
+        messages.success(request, f'Your account has been updated!')
+        return redirect('users-profile')
+
+    context = {
+        'my_website_name': MY_WEBSITE_NAME,
+        'cart': request.user.cart,
+        'form': form,
+    }
+    return render(request, 'users/profile.html', context)
+
+
+@login_required
+def profile_photo(request):
     if request.method == 'POST':
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-        u_form = UserUpdateForm(
-            request.POST,
-            instance=request.user)
-
-        p_form = ProfileUpdateForm(
-            request.POST,
-            request.FILES,
-            instance=request.user.profile)
-
-        if u_form.is_valid() and p_form.is_valid():
-            print(p_form)
-            u_form.save()
-            p_form.save()
+        if p_form.is_valid():
+            if request.FILES:
+                p_form.save()
+            else:
+                request.user.profile.image = settings.PROFILE_IMAGES_DEFAULT_FILENAME
+                request.user.save()
 
             messages.success(request, f'Your account has been updated!')
             return redirect('users-profile')
 
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+    # p_form = ProfileUpdateForm(instance=request.user.profile)
 
     context = {
         'my_website_name': MY_WEBSITE_NAME,
-        'u_form': u_form,
-        'p_form': p_form,
+        'cart': request.user.cart if request.user.is_authenticated else None,
+        # 'p_form': p_form,
     }
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/proifile-photo.html', context)

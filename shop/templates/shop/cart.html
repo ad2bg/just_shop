@@ -1,0 +1,100 @@
+{% extends "shop/base.html" %}
+
+{% block bodyid %}cart{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row mt-5 bg-white">
+
+            <div class="col-12 p-2 bg-secondary text-light shop-header">
+                <span class="display-4">{{ title }}:</span>
+                {% if cart.total_products %}
+                    <span>
+                        <span class="mx-3">Products: {{ cart.total_products }}</span>
+                        <span class="mx-3">Items: {{ cart.total_items }}</span>
+                        <span class="mx-3">Total: ${{ cart.total_price }}</span>
+
+                        <a href="{% url 'cart_checkout' %}" class="btn btn-success py-0"
+                           data-toggle="tooltip" title="Checkout">
+                            <span class="font-size-lg">
+                            <i class="far fa-credit-card"></i>
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                            <i class="fas fa-money-bill-alt"></i>
+                            </span>
+                        </a>
+
+
+                        <a href="{% url 'cart_empty' %}" class="btn btn-danger"
+                           data-toggle="tooltip" title="Empty">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                    </span>
+                {% endif %}
+            </div>
+
+            {# Cart Body #}
+            <div class="col-12 h-100 shop-body">
+                <div class="row h-100 scrollable">
+
+                    <div class="col-12 h-100 p-3">
+                        {% for cart_product in cart.cart_products.all %}
+                            <div class="row my-3">
+                                <div class="col">
+                                    {% include 'shop/partials/product-snippet.html' with product=cart_product.product %}
+                                </div>
+
+                                <div class="col-md-3 py-3 border-left">
+                                    {# FORMS #}
+                                    <div class="w-100 d-flex">
+                                        {# Quantity #}
+                                        <form method="post" class="d-flex">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="cp_id" value="{{ cart_product.id }}">
+
+                                            <input type="number" class="form-control m-2" min="1"
+                                                   name="quantity" value="{{ cart_product.quantity }}"
+                                            >
+
+                                            <span>
+                                                <button type="submit" name="submit" value="quantity"
+                                                        class="btn btn-primary m-2" data-toggle="tooltip"
+                                                        title="Save">
+                                                    <i class="far fa-save"></i>
+                                                </button>
+                                            </span>
+                                        </form>
+
+                                        {# Remove #}
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="cp_id" value="{{ cart_product.id }}">
+
+                                            <button type="submit" name="submit" value="remove"
+                                                    class="btn btn-danger m-2" data-toggle="tooltip" title="Remove">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div>{{ cart_product.quantity }} x ${{ cart_product.product.price }} =
+                                        ${{ cart_product.total_price }}</div>
+                                </div>
+                            </div>
+
+                        {% empty %}
+                            <div class="my-5 w-100 text-center display-4">Your cart is empty!</div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+            {% include 'shop/partials/shop-footer.html' %}
+
+        </div>
+
+    </div>
+
+{% endblock content %}

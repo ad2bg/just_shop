@@ -1,0 +1,27 @@
+{% load crispy_forms_tags %}
+
+<div class="content-section h-100">
+    <div class="scrollable h-100 pr-2">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form|crispy }}
+
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary">Save</button>
+
+                {% if category %}
+                    {% if category.products.all or category.sub_categories.all %}
+                        <a href="{% url 'shop' category.id %}" class="btn btn-success">View</a>
+                    {% else %}
+                        <a href="{% url 'category_delete' category.id %}" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </form>
+
+    </div>
+</div>

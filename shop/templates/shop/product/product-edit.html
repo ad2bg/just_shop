@@ -1,0 +1,16 @@
+{% extends "shop/shop.html" %}
+
+{% block header-and-body %}
+    <div class="col-12 p-2 bg-secondary text-light shop-header">
+        <h3>Edit Product:</h3>
+{#        <a href="{% url 'product_delete' product.id %}" class="btn btn-danger">Delete</a>#}
+    </div>
+
+    <div class="col-12 shop-body">
+        <div class="row h-100 p-3 bg-success">
+            <div class="col-12 px-0">
+                {% include 'shop/partials/products-form.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

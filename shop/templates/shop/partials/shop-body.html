@@ -1,0 +1,16 @@
+<div class="content-section h-100">
+    <h3>Products</h3>
+    <div class="scrollable h-100">
+
+        <ul class="list-group h-100">
+            {% for product in products %}
+                <li class="list-group-item list-group-item-light">
+                    {% include 'shop/partials/product-snippet.html' %}
+                </li>
+            {% empty %}
+                <div class="jumbotron m-0 h-100 text-center display-4">No Products Here</div>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>

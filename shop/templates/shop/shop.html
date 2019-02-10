@@ -1,0 +1,42 @@
+{% extends "shop/base.html" %}
+
+{% block bodyid %}shop{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row mt-5 bg-white">
+
+            {% block header-and-body %}
+                <div class="col-12 p-2 bg-secondary text-light d-flex">
+                    {% include 'shop/partials/shop-header.html' %}
+                </div>
+
+                <div class="col-12 shop-body">
+                    <div class="row h-100">
+
+                        {% if categories %}
+                            <div class="col-md-3 p-1 bg-info">
+                                {% include 'shop/partials/shop-sidebar.html' %}
+                            </div>
+                            <div class="col-md-9 p-1 bg-success">
+                                {% include 'shop/partials/shop-body.html' %}
+                            </div>
+                        {% else %}
+                            <div class="col p-1 bg-success">
+                                {% include 'shop/partials/shop-body.html' %}
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% include 'shop/partials/shop-footer.html' %}
+
+        </div>
+
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,66 @@
+{% load i18n %}
+{% load staticfiles %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    {# Title #}
+    <title>{{ my_website_name }} - {{ title|default:'' }}</title>
+
+
+    {# FavIcon #}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    {# Required metatags #}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {# STYLES #}
+    {% block styles %}
+        {% include 'shop/partials/site-styles.html' %}
+    {% endblock %}
+
+</head>
+
+
+{# BODY #}
+<body id="{% block bodyid %}{% endblock %}"  class="bg-warning">
+
+{# MAIN #}
+<main role="main" class="container-fluid p-0">
+
+    {# NAV #}
+    {% block nav %}
+        {% include 'shop/partials/site-navbar.html' %}
+    {% endblock %}
+
+    {# MESSAGES #}
+    {% block messages %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center m-3">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endblock %}
+
+
+    {# CONTENT #}
+    {% block content %}
+        <div class="container mt-3">
+            <h1 class="jumbotron">{{ title }}</h1>
+        </div>
+    {% endblock %}
+
+</main>
+
+{# SCRIPTS #}
+{% block scripts %}
+    {% include 'shop/partials/site-scripts.html' %}
+{% endblock %}
+
+</body>
+</html>
